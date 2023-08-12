@@ -34,6 +34,20 @@ public class EmployeeController {
     @Autowired
     private JwtProperties jwtProperties;
 
+    @PutMapping
+    @ApiOperation("员工修改")
+    public Result<EmployeeDTO> update(@RequestBody EmployeeDTO employeeDTO){
+        employeeService.update(employeeDTO);
+        return Result.success();
+    }
+
+    @GetMapping("/{id}")
+    @ApiOperation("员工查询 通过id")
+    public Result getById(@PathVariable Long id){
+        Employee employee = employeeService.getById(id);
+        return Result.success(employee);
+    }
+
     @PostMapping
     @ApiOperation("员工添加")
     public Result<Employee> save(@RequestBody EmployeeDTO employeeDTO) {
@@ -79,16 +93,25 @@ public class EmployeeController {
      */
     @PostMapping("/logout")
     @ApiOperation("员工退出")
-    public Result<String> logout() {
+    public Result logout() {
         return Result.success();
     }
 
     @GetMapping("/page")
     @ApiOperation("员工查询")
-    public Result<PageResult> page(EmployeePageQueryDTO employeePageQueryDTO){
+    public Result<PageResult> page(EmployeePageQueryDTO employeePageQueryDTO) {
         log.info("员工查询");
         PageResult pageResult = employeeService.pageQuery(employeePageQueryDTO);
         return Result.success(pageResult);
     }
+
+    @PostMapping("/status/{status}")
+    @ApiOperation("员工状态")
+    public Result status(@PathVariable Integer status, Long id) {
+        log.info("设置员工状态: {}，{}", status, id);
+        employeeService.status(status, id);
+        return Result.success();
+    }
+
 
 }
