@@ -1,21 +1,14 @@
-package com.sky.vo;
+package com.sky.dto;
 
 import com.sky.entity.SetMealDish;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class SetmealVO implements Serializable {
+public class SetMealDTO implements Serializable {
 
     private Long id;
 
@@ -37,12 +30,8 @@ public class SetmealVO implements Serializable {
     //图片
     private String image;
 
-    //更新时间
-    private LocalDateTime updateTime;
-
-    //分类名称
-    private String categoryName;
-
-    //套餐和菜品的关联关系
+    //套餐菜品关系
+    // TODO setmealDishes-> setMealDishes
     private List<SetMealDish> setmealDishes = new ArrayList<>();
+
 }

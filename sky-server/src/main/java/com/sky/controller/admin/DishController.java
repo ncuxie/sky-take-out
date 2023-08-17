@@ -2,6 +2,7 @@ package com.sky.controller.admin;
 
 import com.sky.dto.DishDTO;
 import com.sky.dto.DishPageQueryDTO;
+import com.sky.entity.Dish;
 import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.impl.DishServiceImpl;
@@ -19,6 +20,13 @@ import java.util.List;
 @Api(tags = "菜品接口")
 @Slf4j
 public class DishController {
+
+    @GetMapping("/list")
+    @ApiOperation("菜品查询 根据分类id")
+    public Result<List<Dish>> list(Long categoryId){
+        List<Dish> list = dishService.list(categoryId);
+        return Result.success(list);
+    }
 
     @Autowired
     private DishServiceImpl dishService;

@@ -22,7 +22,7 @@ public class SetMealDish implements Serializable {
     private Long id;
 
     //套餐id
-    private Long setmealId;
+    private Long setMealId;
 
     //菜品id
     private Long dishId;
