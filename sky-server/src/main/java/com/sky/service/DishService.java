@@ -10,11 +10,8 @@ import java.util.List;
 
 public interface DishService {
 
-    /**
-     * 根据分类id查询菜品
-     * @param categoryId
-     * @return
-     */
+    List<DishVO> listWithFlavor(Dish dish);
+
     List<Dish> list(Long categoryId);
 
     void saveWithFlavor(DishDTO dishDTO);

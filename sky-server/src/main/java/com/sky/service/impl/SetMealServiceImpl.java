@@ -16,6 +16,7 @@ import com.sky.mapper.SetMealDishMapper;
 import com.sky.mapper.SetMealMapper;
 import com.sky.result.PageResult;
 import com.sky.service.SetMealService;
+import com.sky.vo.DishItemVO;
 import com.sky.vo.SetMealVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -33,11 +34,19 @@ import java.util.List;
 public class SetMealServiceImpl implements SetMealService {
 
     @Autowired
+    private DishMapper dishMapper;
+    @Autowired
     private SetMealMapper setMealMapper;
     @Autowired
     private SetMealDishMapper setMealDishMapper;
-    @Autowired
-    private DishMapper dishMapper;
+
+    public List<DishItemVO> getDishItemById(Long id) {
+        return setMealMapper.getDishItemBySetMealId(id);
+    }
+
+    public List<SetMeal> list(SetMeal setmeal) {
+        return setMealMapper.list(setmeal);
+    }
 
     public void startOrStop(Integer status, Long id) {
         //起售套餐时，判断套餐内是否有停售菜品，有停售菜品提示"套餐内包含未启售菜品，无法启售"

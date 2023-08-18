@@ -31,7 +31,7 @@
         <set>
             <if test="categoryId!=null">category_id=#{categoryId},</if>
             <if test="status!=null">status=#{status},</if>
-<!--            <if test="categoryName!=null">category_name=#{categoryName},</if>-->
+            <!--            <if test="categoryName!=null">category_name=#{categoryName},</if>-->
 
             <if test="description!=null">description=#{description},</if>
             <if test="image!=null">image=#{image},</if>

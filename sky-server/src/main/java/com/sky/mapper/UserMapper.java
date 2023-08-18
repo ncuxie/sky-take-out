@@ -11,7 +11,5 @@ public interface UserMapper {
     @Select("select * from user where openid=#{openid}")
     User getByOpenid(String openid);
 
-    // TODO insert user
-    @Insert("")
     void insert(User user);
 }
