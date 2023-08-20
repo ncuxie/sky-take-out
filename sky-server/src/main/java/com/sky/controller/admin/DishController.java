@@ -11,6 +11,9 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,15 +24,16 @@ import java.util.List;
 @Slf4j
 public class DishController {
 
+    @Autowired
+    private DishServiceImpl dishService;
+
     @GetMapping("/list")
     @ApiOperation("菜品查询 根据分类id")
+    @Cacheable(cacheNames = "dishCache", key = "#categoryId")
     public Result<List<Dish>> list(Long categoryId){
         List<Dish> list = dishService.list(categoryId);
         return Result.success(list);
     }
-
-    @Autowired
-    private DishServiceImpl dishService;
 
     @GetMapping("/{id}")
     @ApiOperation("菜品查询")
@@ -40,6 +44,7 @@ public class DishController {
 
     @PutMapping
     @ApiOperation("菜品修改")
+    @CacheEvict(cacheNames = "dishCache", key = "#dishDTO.categoryId")
     public Result<String> update(@RequestBody DishDTO dishDTO){
         dishService.update(dishDTO);
         return Result.success();
@@ -47,6 +52,8 @@ public class DishController {
 
     @PostMapping("/status/{status}")
     @ApiOperation("菜品状态")
+    @CacheEvict(cacheNames = "dishCache", allEntries = true)
+    // TODO
     public Result<String> status(@PathVariable Integer status, Long id) {
         dishService.status(status, id);
         return Result.success();
@@ -54,6 +61,7 @@ public class DishController {
 
     @DeleteMapping
     @ApiOperation("菜品删除")
+    @CacheEvict(cacheNames = "dishCache", allEntries = true)
     public Result<String> deleteBatch(@RequestParam List<Long> ids) {
         dishService.deleteBatch(ids);
         return Result.success();
@@ -69,6 +77,7 @@ public class DishController {
 
     @PostMapping
     @ApiOperation("菜品添加")
+    @CacheEvict(cacheNames = "dishCache", key = "#dishDTO.categoryId")
     public Result<String> save(@RequestBody DishDTO dishDTO) {
         log.info("菜品添加");
         dishService.saveWithFlavor(dishDTO);
